@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Aplikasi SIPJ</string>
+    <string name="online_report_trouble">Online Report Trouble</string>
+    <string name="dinas_perhubungan">Dinas Perhubungan</string>
+    <string name="data_survey_jalan">Data Survey Jalan</string>
+    <string name="admin">Admin</string>
+    <string name="list_tim">List Tim</string>
+    <string name="list_user">List User</string>
+    <string name="surat">Surat</string>
+    <string name="statistika">Statistika</string>
+    <string name="statistik_tim">Statistik Tim</string>
+    <string name="logout">Logout</string>
+    <string name="logo_dishub">Logo Dishub</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="home">Home</string>
+</resources>
