@@ -2,7 +2,7 @@ package com.example.aplikasisipj.Model;
 
 public class DataModel {
     private int id;
-    private String nama, alamat, fasilitas, status;
+    private String Nama, Tanggal, Alamat, Fasilitas, Status;
 
     public int getId() {
         return id;
@@ -13,26 +13,42 @@ public class DataModel {
     }
 
     public String getNama() {
-        return nama;
+        return Nama;
     }
 
-    public void setNama(String nama) {
-        this.nama = nama;
+    public void setNama(String Nama) {
+        this.Nama = Nama;
+    }
+
+    public String getTanggal() {
+        return Tanggal;
+    }
+
+    public void setTanggal(String tanggal) {
+        Tanggal = tanggal;
     }
 
     public String getAlamat() {
-        return alamat;
+        return Alamat;
     }
 
-    public void setAlamat(String alamat) {
-        this.alamat = alamat;
+    public void setAlamat(String Alamat) {
+        this.Alamat = Alamat;
     }
 
     public String getFasilitas() {
-        return fasilitas;
+        return Fasilitas;
     }
 
-    public void setFasilitas(String fasilitas) {
-        this.fasilitas = fasilitas;
+    public void setFasilitas(String Fasilitas) {
+        this.Fasilitas = Fasilitas;
+    }
+
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
     }
 }
