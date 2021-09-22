@@ -1,4 +1,4 @@
-package com.example.aplikasisipj;
+package com.example.aplikasisipj.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -11,11 +11,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.aplikasisipj.AdminActivity;
+import com.example.aplikasisipj.ListTim;
+import com.example.aplikasisipj.ListUser;
+import com.example.aplikasisipj.R;
+import com.example.aplikasisipj.StatistikTim;
+import com.example.aplikasisipj.Statistika;
+import com.example.aplikasisipj.Surat;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    //Vatiables
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
