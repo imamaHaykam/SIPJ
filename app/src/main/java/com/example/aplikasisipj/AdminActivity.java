@@ -8,19 +8,24 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.aplikasisipj.API.APIRequestData;
 import com.example.aplikasisipj.API.RetroServer;
 import com.example.aplikasisipj.Activity.MainActivity;
+import com.example.aplikasisipj.Activity.TambahActivity;
 import com.example.aplikasisipj.Adapter.AdapterData;
 import com.example.aplikasisipj.Model.DataModel;
 import com.example.aplikasisipj.Model.ResponseModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.PrintStream;
@@ -32,11 +37,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AdminActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class AdminActivity extends MainActivity {
     private RecyclerView rvData;
     private RecyclerView.Adapter adData;
     private RecyclerView.LayoutManager lmData;
     public List<DataModel> listData = new ArrayList<>();
+    private SwipeRefreshLayout srlData;
+    private ProgressBar pbData;
+    private FloatingActionButton fabTambah;
 
 
     DrawerLayout drawerLayout;
@@ -63,8 +71,35 @@ public class AdminActivity extends AppCompatActivity implements NavigationView.O
         navigationView.setNavigationItemSelectedListener(this);
 
         rvData = findViewById(R.id.rv_data);
+        srlData = findViewById(R.id.srl_data);
+        pbData = findViewById(R.id.pb_data);
+        fabTambah = findViewById(R.id.fab_tambah);
+
         lmData = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvData.setLayoutManager(lmData);
+
+        //retrieveData();
+
+        srlData.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                srlData.setRefreshing(true);
+                retrieveData();
+                srlData.setRefreshing(false);
+            }
+        });
+
+        fabTambah.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AdminActivity.this, TambahActivity.class));
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         retrieveData();
     }
 
@@ -82,9 +117,7 @@ public class AdminActivity extends AppCompatActivity implements NavigationView.O
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         switch (menuItem.getItemId()) {
-            case R.id.nav_home:
-                Intent intent = new Intent(AdminActivity.this, AdminActivity.class);
-                startActivity(intent);
+            case R.id.nav_admin:
                 break;
         }
 
@@ -92,6 +125,8 @@ public class AdminActivity extends AppCompatActivity implements NavigationView.O
     }
 
     public void retrieveData(){
+        pbData.setVisibility(View.VISIBLE);
+
         APIRequestData ardData = RetroServer.konekRetrofit().create(APIRequestData.class);
         Call<ResponseModel> tampilData = ardData.ardRetrieveData();
 
@@ -101,7 +136,7 @@ public class AdminActivity extends AppCompatActivity implements NavigationView.O
                 int kode = response.body().getKode();
                 String pesan = response.body().getPesan();
 
-                Toast.makeText(AdminActivity.this, "Kode : "+kode+ "| Pesan : "+pesan, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(AdminActivity.this, "Kode : "+kode+ "| Pesan : "+pesan, Toast.LENGTH_SHORT).show();
 
                 listData = response.body().getData();
 
@@ -109,14 +144,14 @@ public class AdminActivity extends AppCompatActivity implements NavigationView.O
                 rvData.setAdapter(adData);
                 adData.notifyDataSetChanged();
 
-                for(int i=0;i<listData.size();i++){
-                    System.out.println(listData.get(i));
-                }
+                pbData.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onFailure(Call<ResponseModel> call, Throwable t) {
                 Toast.makeText(AdminActivity.this, "Gagal Menghubungi Server : "+t.getMessage(), Toast.LENGTH_SHORT).show();
+
+                pbData.setVisibility(View.INVISIBLE);
             }
         });
     }
