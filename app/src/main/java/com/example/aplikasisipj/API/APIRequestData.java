@@ -21,4 +21,10 @@ public interface APIRequestData {
             @Field("Fasilitas") String Fasilitas,
             @Field("Status") String Status
     );
+
+    @FormUrlEncoded
+    @POST("delete.php")
+    Call<ResponseModel> ardDeleteData(
+            @Field("Id") int id
+    );
 }

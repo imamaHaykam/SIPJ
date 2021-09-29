@@ -1,22 +1,34 @@
 package com.example.aplikasisipj.Adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.aplikasisipj.API.APIRequestData;
+import com.example.aplikasisipj.API.RetroServer;
+import com.example.aplikasisipj.AdminActivity;
 import com.example.aplikasisipj.Model.DataModel;
+import com.example.aplikasisipj.Model.ResponseModel;
 import com.example.aplikasisipj.R;
 
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class AdapterData extends RecyclerView.Adapter<AdapterData.HolderData>{
     private Context ctx;
     private List<DataModel> listData;
+    private int idSIPJ;
 
     public AdapterData(Context ctx, List<DataModel> listData) {
         this.ctx = ctx;
@@ -60,6 +72,56 @@ public class AdapterData extends RecyclerView.Adapter<AdapterData.HolderData>{
             tvAlamat = itemView.findViewById(R.id.tv_alamat);
             tvFasilitas = itemView.findViewById(R.id.tv_fasilitas);
             tvStatus = itemView.findViewById(R.id.tv_status);
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    AlertDialog.Builder dialogPesan = new AlertDialog.Builder(ctx);
+                    dialogPesan.setMessage("Pilih Operasi yang Akan dilakukan");
+                    dialogPesan.setCancelable(true);
+
+                    idSIPJ = Integer.parseInt(tvId.getText().toString());
+
+                    dialogPesan.setPositiveButton("Hapus", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            deleteData();
+                            dialogInterface.dismiss();
+                            ((AdminActivity) ctx).retrieveData();
+                        }
+                    });
+                    dialogPesan.setNegativeButton("Ubah", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+
+                    dialogPesan.show();
+
+                    return false;
+                }
+            });
+        }
+
+        private void deleteData(){
+            APIRequestData ardData = RetroServer.konekRetrofit().create(APIRequestData.class);
+            Call<ResponseModel> hapusData = ardData.ardDeleteData(idSIPJ);
+
+            hapusData.enqueue(new Callback<ResponseModel>() {
+                @Override
+                public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                    int kode = response.body().getKode();
+                    String pesan = response.body().getPesan();
+
+                    Toast.makeText(ctx, "Kode : "+kode+" | Pesan : "+pesan, Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(Call<ResponseModel> call, Throwable t) {
+                    Toast.makeText(ctx, "Gagal Menghubungi Server" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 }
