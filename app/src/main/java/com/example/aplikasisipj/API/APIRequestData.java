@@ -27,4 +27,21 @@ public interface APIRequestData {
     Call<ResponseModel> ardDeleteData(
             @Field("Id") int id
     );
+
+    @FormUrlEncoded
+    @POST("get.php")
+    Call<ResponseModel> ardGetData(
+            @Field("Id") int id
+    );
+
+    @FormUrlEncoded
+    @POST("update.php")
+    Call<ResponseModel> ardUpdateData(
+            @Field("Id") int id,
+            @Field("Nama") String Nama,
+            @Field("Tanggal") String Tanggal,
+            @Field("Alamat") String Alamat,
+            @Field("Fasilitas") String Fasilitas,
+            @Field("Status") String Status
+    );
 }

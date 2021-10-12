@@ -2,6 +2,8 @@ package com.example.aplikasisipj.Adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aplikasisipj.API.APIRequestData;
 import com.example.aplikasisipj.API.RetroServer;
+import com.example.aplikasisipj.Activity.UpdateActivity;
 import com.example.aplikasisipj.AdminActivity;
 import com.example.aplikasisipj.Model.DataModel;
 import com.example.aplikasisipj.Model.ResponseModel;
@@ -28,6 +31,7 @@ import retrofit2.Response;
 public class AdapterData extends RecyclerView.Adapter<AdapterData.HolderData>{
     private Context ctx;
     private List<DataModel> listData;
+    private List<DataModel> listSIPJ;
     private int idSIPJ;
 
     public AdapterData(Context ctx, List<DataModel> listData) {
@@ -78,6 +82,8 @@ public class AdapterData extends RecyclerView.Adapter<AdapterData.HolderData>{
                 public boolean onLongClick(View view) {
                     AlertDialog.Builder dialogPesan = new AlertDialog.Builder(ctx);
                     dialogPesan.setMessage("Pilih Operasi yang Akan dilakukan");
+                    dialogPesan.setTitle("Perhatian");
+                    dialogPesan.setIcon(R.mipmap.ic_launcher_round);
                     dialogPesan.setCancelable(true);
 
                     idSIPJ = Integer.parseInt(tvId.getText().toString());
@@ -87,13 +93,20 @@ public class AdapterData extends RecyclerView.Adapter<AdapterData.HolderData>{
                         public void onClick(DialogInterface dialogInterface, int i) {
                             deleteData();
                             dialogInterface.dismiss();
-                            ((AdminActivity) ctx).retrieveData();
+                            Handler hand = new Handler();
+                            hand.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ((AdminActivity) ctx).retrieveData();
+                                }
+                            }, 500 );
                         }
                     });
                     dialogPesan.setNegativeButton("Ubah", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-
+                            getData();
+                            dialogInterface.dismiss();
                         }
                     });
 
@@ -115,6 +128,45 @@ public class AdapterData extends RecyclerView.Adapter<AdapterData.HolderData>{
                     String pesan = response.body().getPesan();
 
                     Toast.makeText(ctx, "Kode : "+kode+" | Pesan : "+pesan, Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(Call<ResponseModel> call, Throwable t) {
+                    Toast.makeText(ctx, "Gagal Menghubungi Server" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        private void getData(){
+            APIRequestData ardData = RetroServer.konekRetrofit().create(APIRequestData.class);
+            Call<ResponseModel> ambilData = ardData.ardGetData(idSIPJ);
+
+            ambilData.enqueue(new Callback<ResponseModel>() {
+                @Override
+                public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                    int kode = response.body().getKode();
+                    String pesan = response.body().getPesan();
+                    listSIPJ = response.body().getData();
+
+                    int varIdSIPJ = listSIPJ.get(0).getId();
+                    String varNamaSIPJ = listSIPJ.get(0).getNama();
+                    String varTanggalSIPJ = listSIPJ.get(0).getTanggal();
+                    String varAlamatSIPJ = listSIPJ.get(0).getAlamat();
+                    String varFasilitasSIPJ = listSIPJ.get(0).getFasilitas();
+                    String varStatusSIPJ = listSIPJ.get(0).getStatus();
+
+
+                    //Toast.makeText(ctx, "Kode : "+kode+" | Pesan : "+pesan, Toast.LENGTH_SHORT).show();
+
+                    Intent send = new Intent(ctx, UpdateActivity.class);
+                    send.putExtra("xId", varIdSIPJ);
+                    send.putExtra("xNama", varNamaSIPJ);
+                    send.putExtra("xTanggal", varTanggalSIPJ);
+                    send.putExtra("xAlamat", varAlamatSIPJ);
+                    send.putExtra("xFasilitas", varFasilitasSIPJ);
+                    send.putExtra("xStatus", varStatusSIPJ);
+                    ctx.startActivity(send);
+
                 }
 
                 @Override
