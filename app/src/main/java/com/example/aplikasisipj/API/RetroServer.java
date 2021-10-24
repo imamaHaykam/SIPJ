@@ -1,10 +1,12 @@
 package com.example.aplikasisipj.API;
 
+import com.example.aplikasisipj.Tools;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetroServer {
-    private static final String baseURL = "http://10.0.2.2/sipj/";
+    private static final String baseURL = (new Tools()).BASE_URL;
     private static Retrofit retro;
 
     public static Retrofit konekRetrofit(){

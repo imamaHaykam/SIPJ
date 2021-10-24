@@ -133,16 +133,18 @@ public class AdminActivity extends MainActivity {
         tampilData.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                int kode = response.body().getKode();
-                String pesan = response.body().getPesan();
+                if(response.body() != null){
+                    int kode = response.body().getKode();
+                    String pesan = response.body().getPesan();
 
-                //Toast.makeText(AdminActivity.this, "Kode : "+kode+ "| Pesan : "+pesan, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(AdminActivity.this, "Kode : "+kode+ "| Pesan : "+pesan, Toast.LENGTH_SHORT).show();
 
-                listData = response.body().getData();
+                    listData = response.body().getData();
 
-                adData = new AdapterData(AdminActivity.this, listData);
-                rvData.setAdapter(adData);
-                adData.notifyDataSetChanged();
+                    adData = new AdapterData(AdminActivity.this, listData);
+                    rvData.setAdapter(adData);
+                    adData.notifyDataSetChanged();
+                }
 
                 pbData.setVisibility(View.INVISIBLE);
             }

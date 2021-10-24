@@ -1,96 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
     tools:context=".Activity.TambahActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tambah Data"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:layout_gravity="center"
-        android:layout_marginBottom="30dp"
-        />
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:paddingBottom="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Tambah Data"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/et_nama"
+        <ImageView
+            android:id="@+id/img_upload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:adjustViewBounds="true"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_baseline_add_photo_alternate_24" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nama Tim"
-            android:textSize="20sp"
-            android:inputType="text"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="20dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/et_tanggal"
+            <EditText
+                android:id="@+id/et_nama"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nama Tim"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Tanggal"
-            android:textSize="20sp"
-            android:inputType="datetime"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="10dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/et_alamat"
+            <EditText
+                android:id="@+id/et_tanggal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tanggal"
+                android:inputType="datetime" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Alamat"
-            android:textSize="20sp"
-            android:inputType="text"
-            android:maxLines="2"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="10dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/et_fasilitas"
+            <EditText
+                android:id="@+id/et_alamat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Alamat"
+                android:inputType="text"
+                android:maxLines="2" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Fasilitas"
-            android:textSize="20sp"
-            android:inputType=""
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="10dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/et_status"
+            <EditText
+                android:id="@+id/et_fasilitas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Fasilitas" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Status"
-            android:textSize="20sp"
-            android:inputType="text"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:id="@+id/et_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Status"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btn_simpan"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:text="Tambah"
-            android:textSize="20sp"
+            android:layout_height="60dp"
             android:layout_marginTop="30dp"
-            />
+            android:text="Tambah" />
+    </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

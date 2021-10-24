@@ -1,8 +1,33 @@
 package com.example.aplikasisipj.Model;
 
-public class DataModel {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class DataModel implements Parcelable {
     private int Id;
-    private String Nama, Tanggal, Alamat, Fasilitas, Status;
+    private String Nama, Tanggal, Alamat, Fasilitas, Status, Image;
+
+    protected DataModel(Parcel in) {
+        Id = in.readInt();
+        Nama = in.readString();
+        Tanggal = in.readString();
+        Alamat = in.readString();
+        Fasilitas = in.readString();
+        Status = in.readString();
+        Image = in.readString();
+    }
+
+    public static final Creator<DataModel> CREATOR = new Creator<DataModel>() {
+        @Override
+        public DataModel createFromParcel(Parcel in) {
+            return new DataModel(in);
+        }
+
+        @Override
+        public DataModel[] newArray(int size) {
+            return new DataModel[size];
+        }
+    };
 
     public int getId() {
         return Id;
@@ -50,5 +75,29 @@ public class DataModel {
 
     public void setStatus(String status) {
         Status = status;
+    }
+
+    public String getImage() {
+        return Image;
+    }
+
+    public void setImage(String image) {
+        Image = image;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(Id);
+        parcel.writeString(Nama);
+        parcel.writeString(Tanggal);
+        parcel.writeString(Alamat);
+        parcel.writeString(Fasilitas);
+        parcel.writeString(Status);
+        parcel.writeString(Image);
     }
 }

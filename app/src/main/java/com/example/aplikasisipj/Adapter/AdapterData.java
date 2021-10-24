@@ -16,19 +16,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aplikasisipj.API.APIRequestData;
 import com.example.aplikasisipj.API.RetroServer;
+import com.example.aplikasisipj.Activity.TambahDetailActivity;
 import com.example.aplikasisipj.Activity.UpdateActivity;
 import com.example.aplikasisipj.AdminActivity;
 import com.example.aplikasisipj.Model.DataModel;
 import com.example.aplikasisipj.Model.ResponseModel;
 import com.example.aplikasisipj.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AdapterData extends RecyclerView.Adapter<AdapterData.HolderData>{
+public class AdapterData extends RecyclerView.Adapter<AdapterData.HolderData> {
     private Context ctx;
     private List<DataModel> listData;
     private List<DataModel> listSIPJ;
@@ -61,10 +63,14 @@ public class AdapterData extends RecyclerView.Adapter<AdapterData.HolderData>{
 
     @Override
     public int getItemCount() {
-        return listData.size();
+        if (listData == null) {
+            return 0;
+        } else {
+            return listData.size();
+        }
     }
 
-    public class HolderData extends RecyclerView.ViewHolder{
+    public class HolderData extends RecyclerView.ViewHolder {
         TextView tvId, tvNama, tvTanggal, tvAlamat, tvFasilitas, tvStatus;
 
         public HolderData(@NonNull View itemView) {
@@ -77,47 +83,50 @@ public class AdapterData extends RecyclerView.Adapter<AdapterData.HolderData>{
             tvFasilitas = itemView.findViewById(R.id.tv_fasilitas);
             tvStatus = itemView.findViewById(R.id.tv_status);
 
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    AlertDialog.Builder dialogPesan = new AlertDialog.Builder(ctx);
-                    dialogPesan.setMessage("Pilih Operasi yang Akan dilakukan");
-                    dialogPesan.setTitle("Perhatian");
-                    dialogPesan.setIcon(R.mipmap.ic_launcher_round);
-                    dialogPesan.setCancelable(true);
+            itemView.setOnLongClickListener(view -> {
+                AlertDialog.Builder dialogPesan = new AlertDialog.Builder(ctx);
+                dialogPesan.setMessage("Pilih Operasi yang Akan dilakukan");
+                dialogPesan.setTitle("Perhatian");
+                dialogPesan.setIcon(R.mipmap.ic_launcher_round);
+                dialogPesan.setCancelable(true);
 
-                    idSIPJ = Integer.parseInt(tvId.getText().toString());
+                idSIPJ = Integer.parseInt(tvId.getText().toString());
 
-                    dialogPesan.setPositiveButton("Hapus", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            deleteData();
-                            dialogInterface.dismiss();
-                            Handler hand = new Handler();
-                            hand.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    ((AdminActivity) ctx).retrieveData();
-                                }
-                            }, 500 );
-                        }
-                    });
-                    dialogPesan.setNegativeButton("Ubah", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            getData();
-                            dialogInterface.dismiss();
-                        }
-                    });
+                dialogPesan.setPositiveButton("Hapus", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        deleteData();
+                        dialogInterface.dismiss();
+                        Handler hand = new Handler();
+                        hand.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                ((AdminActivity) ctx).retrieveData();
+                            }
+                        }, 500);
+                    }
+                });
+//                dialogPesan.setNegativeButton("Ubah", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        getData();
+//                        dialogInterface.dismiss();
+//                    }
+//                });
 
-                    dialogPesan.show();
+                dialogPesan.show();
 
-                    return false;
-                }
+                return false;
+            });
+
+            itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(itemView.getContext(), TambahDetailActivity.class);
+                intent.putExtra("TAMBAH", listData.get(getBindingAdapterPosition()));
+                itemView.getContext().startActivity(intent);
             });
         }
 
-        private void deleteData(){
+        private void deleteData() {
             APIRequestData ardData = RetroServer.konekRetrofit().create(APIRequestData.class);
             Call<ResponseModel> hapusData = ardData.ardDeleteData(idSIPJ);
 
@@ -127,7 +136,7 @@ public class AdapterData extends RecyclerView.Adapter<AdapterData.HolderData>{
                     int kode = response.body().getKode();
                     String pesan = response.body().getPesan();
 
-                    Toast.makeText(ctx, "Kode : "+kode+" | Pesan : "+pesan, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ctx, "Kode : " + kode + " | Pesan : " + pesan, Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
@@ -137,7 +146,7 @@ public class AdapterData extends RecyclerView.Adapter<AdapterData.HolderData>{
             });
         }
 
-        private void getData(){
+        private void getData() {
             APIRequestData ardData = RetroServer.konekRetrofit().create(APIRequestData.class);
             Call<ResponseModel> ambilData = ardData.ardGetData(idSIPJ);
 
