@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Location;
+import android.location.LocationListener;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -40,7 +42,7 @@ import retrofit2.Response;
 
 public class TambahActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText etNama, etTanggal, etAlamat, etFasilitas, etStatus;
-    private Button btnSimpan;
+    private Button btnSimpan, btnLokasi;
     private ImageView imgUpload;
     private String nama, tanggal, alamat, fasilitas, status;
     private static final int IMAGE_UPLOAD_REQUEST = 1;
@@ -59,11 +61,27 @@ public class TambahActivity extends AppCompatActivity implements View.OnClickLis
         etFasilitas = findViewById(R.id.et_fasilitas);
         etStatus = findViewById(R.id.et_status);
         btnSimpan = findViewById(R.id.btn_simpan);
+        btnLokasi = findViewById(R.id.btn_lokasi);
         imgUpload = findViewById(R.id.img_upload);
 
         imgUpload.setOnClickListener(this);
 
         btnSimpan.setOnClickListener(this);
+
+        btnLokasi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openActivitytracklokasi();
+            }
+        });
+
+        String textLocation = getIntent().getStringExtra("keyname");
+        etAlamat.setText(textLocation);
+    }
+
+    public void openActivitytracklokasi() {
+        Intent intent = new Intent(TambahActivity.this, Activitytracklokasi.class);
+        startActivity(intent);
     }
 
     private void createData() {

@@ -70,6 +70,13 @@
                 android:hint="Alamat"
                 android:inputType="text"
                 android:maxLines="2" />
+
+            <Button
+                android:id="@+id/btn_lokasi"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:backgroundTint="@color/teal_700"
+                android:text="Track lokasi" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
