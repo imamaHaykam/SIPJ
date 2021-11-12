@@ -4,12 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.aplikasisipj.AdminActivity;
 import com.example.aplikasisipj.ListTim;
@@ -20,7 +23,7 @@ import com.example.aplikasisipj.Statistika;
 import com.example.aplikasisipj.Surat;
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -43,6 +46,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+
+        CardView cardadmin = findViewById(R.id.cardAdmin);
+        cardadmin.setOnClickListener(this);
+        CardView cardlstim = findViewById(R.id.cardTim);
+        cardlstim.setOnClickListener(this);
+        CardView carduser = findViewById(R.id.cardUser);
+        carduser.setOnClickListener(this);
+        CardView cardsurat = findViewById(R.id.cardSurat);
+        cardsurat.setOnClickListener(this);
+        CardView cardsts = findViewById(R.id.cardStatistik);
+        cardsts.setOnClickListener(this);
+        CardView cardststim = findViewById(R.id.cardStsTim);
+        cardststim.setOnClickListener(this);
     }
 
     @Override
@@ -96,5 +112,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.cardAdmin:
+                Intent intent = new Intent(MainActivity.this, AdminActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.cardTim:
+                Intent intent1 = new Intent(MainActivity.this, ListTim.class);
+                startActivity(intent1);
+                break;
+            case R.id.cardUser:
+                Intent intent2 = new Intent(MainActivity.this, ListUser.class);
+                startActivity(intent2);
+                break;
+            case R.id.cardSurat:
+                Intent intent3 = new Intent(MainActivity.this, Surat.class);
+                startActivity(intent3);
+                break;
+            case R.id.cardStatistik:
+                Intent intent4 = new Intent(MainActivity.this, Statistika.class);
+                startActivity(intent4);
+            case R.id.cardStsTim:
+                Intent intent5 = new Intent(MainActivity.this, StatistikTim.class);
+                startActivity(intent5);
+                break;
+            case R.id.cardLG:
+        }
     }
 }

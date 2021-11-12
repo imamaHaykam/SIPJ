@@ -10,12 +10,12 @@
     tools:openDrawer="start">
 
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/nav_view"
+        android:layout_gravity="start"
         app:headerLayout="@layout/header"
-        app:menu="@menu/main_menu"
-        android:layout_gravity="start"/>
+        app:menu="@menu/main_menu" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -83,6 +83,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView3">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardAdmin"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
@@ -109,12 +110,13 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        app:srcCompat="@drawable/admin_icon"
-                        android:contentDescription="@string/admin" />
+                        android:contentDescription="@string/admin"
+                        app:srcCompat="@drawable/admin_icon" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardTim"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
@@ -131,8 +133,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        app:srcCompat="@drawable/team_icon"
-                        android:contentDescription="@string/list_tim" />
+                        android:contentDescription="@string/list_tim"
+                        app:srcCompat="@drawable/team_icon" />
 
                     <TextView
                         android:id="@+id/textViewTim"
@@ -159,6 +161,7 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardUser"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
@@ -185,12 +188,13 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        app:srcCompat="@drawable/user_icon"
-                        android:contentDescription="@string/list_user" />
+                        android:contentDescription="@string/list_user"
+                        app:srcCompat="@drawable/user_icon" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardSurat"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
@@ -207,8 +211,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        app:srcCompat="@drawable/surat_icon"
-                        android:contentDescription="@string/surat" />
+                        android:contentDescription="@string/surat"
+                        app:srcCompat="@drawable/surat_icon" />
 
                     <TextView
                         android:id="@+id/textViewSurat"
@@ -235,6 +239,7 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardStatistik"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
@@ -261,12 +266,13 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        app:srcCompat="@drawable/chart_icon"
-                        android:contentDescription="@string/statistika" />
+                        android:contentDescription="@string/statistika"
+                        app:srcCompat="@drawable/chart_icon" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardStsTim"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
@@ -283,8 +289,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        app:srcCompat="@drawable/chart_icon"
-                        android:contentDescription="@string/statistik_tim" />
+                        android:contentDescription="@string/statistik_tim"
+                        app:srcCompat="@drawable/chart_icon" />
 
                     <TextView
                         android:id="@+id/textViewStatistikTim"
@@ -312,6 +318,7 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardLG"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
@@ -338,8 +345,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        app:srcCompat="@drawable/logout_icon"
-                        android:contentDescription="@string/logout" />
+                        android:contentDescription="@string/logout"
+                        app:srcCompat="@drawable/logout_icon" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
