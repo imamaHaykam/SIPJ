@@ -16,4 +16,21 @@
     <string name="home">Home</string>
     <string name="alamat">Alamat</string>
     <string name="confirm">CONFIRM</string>
+    <string name="track_lokasi">Track lokasi</string>
+    <string name="Rambu">Rambu</string>
+    <string name="ZebraCross">Zebra Cross</string>
+    <string name="TrafficLight">Traffic Light</string>
+    <string name="Barrier">Barrier</string>
+    <string name="Marka">Marka</string>
+    <string name="WarningLight">Warning Light</string>
+    <string name="RPPJ">RPPJ</string>
+    <string name="PapanNamaJalan">Papan Nama Jalan</string>
+    <string name="SpeedBump">Speed Bump</string>
+    <string name="CerminTikungan">Cermin Tikungan</string>
+    <string name="Rencana">Rencana</string>
+    <string name="Baru">Baru</string>
+    <string name="Normal">Normal</string>
+    <string name="RusakRingan">Rusak Ringan</string>
+    <string name="RusakSedang">Rusak Sedang</string>
+    <string name="RusakBerat">Rusak Berat</string>
 </resources>

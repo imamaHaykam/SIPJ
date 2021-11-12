@@ -4,28 +4,25 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.location.Location;
-import android.location.LocationListener;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.bumptech.glide.Glide;
 import com.example.aplikasisipj.API.APIRequestData;
 import com.example.aplikasisipj.API.RetroServer;
-import com.example.aplikasisipj.Model.DataModel;
 import com.example.aplikasisipj.Model.ResponseModel;
 import com.example.aplikasisipj.R;
-import com.example.aplikasisipj.Tools;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -55,6 +52,8 @@ public class TambahActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tambah);
 
+        Spinner spinnerFasilitas = findViewById(R.id.sp_fasilitas);
+        Spinner spinnerStatus = findViewById(R.id.sp_status);
         etNama = findViewById(R.id.et_nama);
         etTanggal = findViewById(R.id.et_tanggal);
         etAlamat = findViewById(R.id.et_alamat);
@@ -63,6 +62,72 @@ public class TambahActivity extends AppCompatActivity implements View.OnClickLis
         btnSimpan = findViewById(R.id.btn_simpan);
         btnLokasi = findViewById(R.id.btn_lokasi);
         imgUpload = findViewById(R.id.img_upload);
+
+        final String strFasilitas[]={"Rambu","Zebra Cross","Traffic Light","Barrier","Marka","Warning Light","RPPJ","Papan Nama Jalan","Speed Bump","Cermin Tikungan"};
+        ArrayAdapter arrayAdapter = new ArrayAdapter(TambahActivity.this, android.R.layout.simple_dropdown_item_1line,strFasilitas);
+        spinnerFasilitas.setAdapter(arrayAdapter);
+        spinnerFasilitas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(strFasilitas[0].equals(spinnerFasilitas.getItemAtPosition(i).toString())){
+                    etFasilitas.setText(R.string.Rambu);
+                } else if(strFasilitas[1].equals(spinnerFasilitas.getItemAtPosition(i).toString())){
+                    etFasilitas.setText(R.string.ZebraCross);
+                } else if(strFasilitas[2].equals(spinnerFasilitas.getItemAtPosition(i).toString())){
+                    etFasilitas.setText(R.string.TrafficLight);
+                } else if(strFasilitas[3].equals(spinnerFasilitas.getItemAtPosition(i).toString())){
+                    etFasilitas.setText(R.string.Barrier);
+                } else if(strFasilitas[4].equals(spinnerFasilitas.getItemAtPosition(i).toString())){
+                    etFasilitas.setText(R.string.Marka);
+                } else if(strFasilitas[5].equals(spinnerFasilitas.getItemAtPosition(i).toString())){
+                    etFasilitas.setText(R.string.WarningLight);
+                } else if(strFasilitas[6].equals(spinnerFasilitas.getItemAtPosition(i).toString())){
+                    etFasilitas.setText(R.string.RPPJ);
+                } else if(strFasilitas[7].equals(spinnerFasilitas.getItemAtPosition(i).toString())){
+                    etFasilitas.setText(R.string.PapanNamaJalan);
+                } else if(strFasilitas[8].equals(spinnerFasilitas.getItemAtPosition(i).toString())){
+                    etFasilitas.setText(R.string.SpeedBump);
+                } else if(strFasilitas[9].equals(spinnerFasilitas.getItemAtPosition(i).toString())){
+                    etFasilitas.setText(R.string.CerminTikungan);
+                }
+            }
+
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        final String strStatus[]={"Rencana","Baru","Normal","Rusak Ringan","Rusak Sedang","Rusak Berat"};
+        ArrayAdapter arrayAdapterS = new ArrayAdapter(TambahActivity.this, android.R.layout.simple_dropdown_item_1line,strStatus);
+        spinnerStatus.setAdapter(arrayAdapterS);
+        spinnerStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(strStatus[0].equals(spinnerStatus.getItemAtPosition(i).toString())){
+                    etStatus.setText(R.string.Rencana);
+                } else if(strStatus[1].equals(spinnerStatus.getItemAtPosition(i).toString())){
+                    etStatus.setText(R.string.Baru);
+                } else if(strStatus[2].equals(spinnerStatus.getItemAtPosition(i).toString())){
+                    etStatus.setText(R.string.Normal);
+                } else if(strStatus[3].equals(spinnerStatus.getItemAtPosition(i).toString())){
+                    etStatus.setText(R.string.RusakRingan);
+                } else if(strStatus[4].equals(spinnerStatus.getItemAtPosition(i).toString())){
+                    etStatus.setText(R.string.RusakSedang);
+                } else if(strStatus[5].equals(spinnerStatus.getItemAtPosition(i).toString())){
+                    etStatus.setText(R.string.RusakBerat);
+                }
+            }
+
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         imgUpload.setOnClickListener(this);
 
