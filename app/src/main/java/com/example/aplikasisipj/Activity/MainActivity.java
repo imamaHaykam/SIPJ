@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent5);
                 break;
             case R.id.cardLG:
+                //new
         }
     }
 }
