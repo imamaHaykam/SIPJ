@@ -1,9 +1,20 @@
 package com.example.aplikasisipj.Activity;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -19,6 +30,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.aplikasisipj.API.APIRequestData;
 import com.example.aplikasisipj.API.RetroServer;
@@ -31,6 +43,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import java.util.List;
+import java.util.Locale;
+
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -38,7 +53,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TambahActivity extends AppCompatActivity implements View.OnClickListener {
+public class TambahActivity extends AppCompatActivity implements View.OnClickListener, LocationListener {
     private EditText etNama, etTanggal, etAlamat, etFasilitas, etStatus;
     private Button btnSimpan, btnLokasi;
     private ImageView imgUpload;
@@ -47,6 +62,7 @@ public class TambahActivity extends AppCompatActivity implements View.OnClickLis
     private static final int PERMISSIONS_REQUEST = 2;
     private Bitmap selectedImage = null;
     private MultipartBody.Part imagePart = null;
+    LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +79,20 @@ public class TambahActivity extends AppCompatActivity implements View.OnClickLis
         btnSimpan = findViewById(R.id.btn_simpan);
         btnLokasi = findViewById(R.id.btn_lokasi);
         imgUpload = findViewById(R.id.img_upload);
+
+        if (ContextCompat.checkSelfPermission(TambahActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(TambahActivity.this, new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION
+            }, 100);
+        }
+
+        btnLokasi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getLocation();
+            }
+        });
 
         final String strFasilitas[]={"Rambu","Zebra Cross","Traffic Light","Barrier","Marka","Warning Light","RPPJ","Papan Nama Jalan","Speed Bump","Cermin Tikungan"};
         ArrayAdapter arrayAdapter = new ArrayAdapter(TambahActivity.this, android.R.layout.simple_dropdown_item_1line,strFasilitas);
@@ -134,21 +164,63 @@ public class TambahActivity extends AppCompatActivity implements View.OnClickLis
 
         btnSimpan.setOnClickListener(this);
 
-        btnLokasi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openActivitytracklokasi();
-            }
-        });
+//        btnLokasi.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                openActivitytracklokasi();
+//            }
+//        });
 
-        String textLocation = getIntent().getStringExtra("keyname");
-        etAlamat.setText(textLocation);
+//        String textLocation = getIntent().getStringExtra("keyname");
+//        etAlamat.setText(textLocation);
     }
 
-    public void openActivitytracklokasi() {
-        Intent intent = new Intent(TambahActivity.this, Activitytracklokasi.class);
-        startActivity(intent);
+    @SuppressLint("MissingPermission")
+    private void getLocation() {
+
+        try {
+            locationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5, TambahActivity.this);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
+
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+        Toast.makeText(this, ""+location.getLatitude()+","+location.getLongitude(), Toast.LENGTH_SHORT).show();
+
+        try {
+            Geocoder geocoder = new Geocoder(TambahActivity.this, Locale.getDefault());
+            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(), 1);
+            String address = addresses.get(0).getAddressLine(0);
+
+            etAlamat.setText(address);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(@NonNull String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(@NonNull String provider) {
+
+    }
+
+//    public void openActivitytracklokasi() {
+//        Intent intent = new Intent(TambahActivity.this, Activitytracklokasi.class);
+//        startActivity(intent);
+//    }
 
     private void createData() {
         APIRequestData ardData = RetroServer.konekRetrofit().create(APIRequestData.class);
