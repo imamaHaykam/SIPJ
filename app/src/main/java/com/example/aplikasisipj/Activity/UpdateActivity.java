@@ -122,22 +122,12 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void startImageUploadProcess() {
-        int permission = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                    this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    PERMISSIONS_REQUEST
-            );
-        } else {
             launchImageUploadIntent();
-        }
     }
 
     private void launchImageUploadIntent() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        startActivityForResult(Intent.createChooser(intent, "Open Gallery"), IMAGE_UPLOAD_REQUEST);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, IMAGE_UPLOAD_REQUEST);
     }
 
     @Override

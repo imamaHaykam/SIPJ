@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -204,22 +205,12 @@ public class TambahActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void startImageUploadProcess() {
-        int permission = ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                    this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    PERMISSIONS_REQUEST
-            );
-        } else {
             launchImageUploadIntent();
-        }
     }
 
     private void launchImageUploadIntent() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        startActivityForResult(Intent.createChooser(intent, "Open Gallery"), IMAGE_UPLOAD_REQUEST);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, IMAGE_UPLOAD_REQUEST);
     }
 
     @Override
@@ -227,10 +218,9 @@ public class TambahActivity extends AppCompatActivity implements View.OnClickLis
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == IMAGE_UPLOAD_REQUEST) {
             if (resultCode == RESULT_OK) {
-                Uri selectedImageUrl = data.getData();
+                Bundle extras = data.getExtras();
+                selectedImage = (Bitmap) extras.get("data");
                 try {
-                    selectedImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUrl);
-
                     File file = new File(this.getCacheDir(), System.currentTimeMillis() +".png");
                     file.createNewFile();
 
