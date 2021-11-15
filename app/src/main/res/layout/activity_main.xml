@@ -10,12 +10,12 @@
     tools:openDrawer="start">
 
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/nav_view"
+        android:layout_gravity="start"
         app:headerLayout="@layout/header"
-        app:menu="@menu/main_menu"
-        android:layout_gravity="start"/>
+        app:menu="@menu/main_menu" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -110,8 +110,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        app:srcCompat="@drawable/admin_icon"
-                        android:contentDescription="@string/admin" />
+                        android:contentDescription="@string/admin"
+                        app:srcCompat="@drawable/admin_icon" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
@@ -133,8 +133,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        app:srcCompat="@drawable/team_icon"
-                        android:contentDescription="@string/list_tim" />
+                        android:contentDescription="@string/list_tim"
+                        app:srcCompat="@drawable/team_icon" />
 
                     <TextView
                         android:id="@+id/textViewTim"
@@ -188,8 +188,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        app:srcCompat="@drawable/user_icon"
-                        android:contentDescription="@string/list_user" />
+                        android:contentDescription="@string/list_user"
+                        app:srcCompat="@drawable/user_icon" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
@@ -211,8 +211,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        app:srcCompat="@drawable/surat_icon"
-                        android:contentDescription="@string/surat" />
+                        android:contentDescription="@string/surat"
+                        app:srcCompat="@drawable/surat_icon" />
 
                     <TextView
                         android:id="@+id/textViewSurat"
@@ -266,8 +266,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        app:srcCompat="@drawable/chart_icon"
-                        android:contentDescription="@string/statistika" />
+                        android:contentDescription="@string/statistika"
+                        app:srcCompat="@drawable/chart_icon" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
@@ -289,8 +289,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        app:srcCompat="@drawable/chart_icon"
-                        android:contentDescription="@string/statistik_tim" />
+                        android:contentDescription="@string/statistik_tim"
+                        app:srcCompat="@drawable/chart_icon" />
 
                     <TextView
                         android:id="@+id/textViewStatistikTim"
@@ -345,8 +345,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        app:srcCompat="@drawable/logout_icon"
-                        android:contentDescription="@string/logout" />
+                        android:contentDescription="@string/logout"
+                        app:srcCompat="@drawable/logout_icon" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 
@@ -363,5 +363,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+<!--    test-->
 
 </androidx.drawerlayout.widget.DrawerLayout>
