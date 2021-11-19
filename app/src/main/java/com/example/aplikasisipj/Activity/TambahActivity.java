@@ -2,6 +2,7 @@ package com.example.aplikasisipj.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -87,14 +88,9 @@ public class TambahActivity extends AppCompatActivity implements View.OnClickLis
             }, 100);
         }
 
-        btnLokasi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getLocation();
-            }
-        });
+        btnLokasi.setOnClickListener(view -> getLocation());
 
-        final String strFasilitas[]={"Rambu","Zebra Cross","Traffic Light","Barrier","Marka","Warning Light","RPPJ","Papan Nama Jalan","Speed Bump","Cermin Tikungan"};
+        final String[] strFasilitas ={"Rambu","Zebra Cross","Traffic Light","Barrier","Marka","Warning Light","RPPJ","Papan Nama Jalan","Speed Bump","Cermin Tikungan"};
         ArrayAdapter arrayAdapter = new ArrayAdapter(TambahActivity.this, android.R.layout.simple_dropdown_item_1line,strFasilitas);
         spinnerFasilitas.setAdapter(arrayAdapter);
         spinnerFasilitas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -131,7 +127,7 @@ public class TambahActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
 
-        final String strStatus[]={"Rencana","Baru","Normal","Rusak Ringan","Rusak Sedang","Rusak Berat"};
+        final String[] strStatus ={"Rencana","Baru","Normal","Rusak Ringan","Rusak Sedang","Rusak Berat"};
         ArrayAdapter arrayAdapterS = new ArrayAdapter(TambahActivity.this, android.R.layout.simple_dropdown_item_1line,strStatus);
         spinnerStatus.setAdapter(arrayAdapterS);
         spinnerStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

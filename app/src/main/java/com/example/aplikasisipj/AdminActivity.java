@@ -61,7 +61,7 @@ public class AdminActivity extends MainActivity {
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
 
-        setSupportActionBar(toolbar);
+//        setSupportActionBar(toolbar);
 
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -80,21 +80,13 @@ public class AdminActivity extends MainActivity {
 
         //retrieveData();
 
-        srlData.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                srlData.setRefreshing(true);
-                retrieveData();
-                srlData.setRefreshing(false);
-            }
+        srlData.setOnRefreshListener(() -> {
+            srlData.setRefreshing(true);
+            retrieveData();
+            srlData.setRefreshing(false);
         });
 
-        fabTambah.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(AdminActivity.this, TambahActivity.class));
-            }
-        });
+        fabTambah.setOnClickListener(view -> startActivity(new Intent(AdminActivity.this, TambahActivity.class)));
     }
 
     @Override
@@ -116,9 +108,7 @@ public class AdminActivity extends MainActivity {
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-        switch (menuItem.getItemId()) {
-            case R.id.nav_admin:
-                break;
+        if (menuItem.getItemId() == R.id.nav_admin) {
         }
 
         return true;
