@@ -38,8 +38,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
 
-        setSupportActionBar(toolbar);
-
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
@@ -74,41 +72,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-        switch (menuItem.getItemId()) {
-            case R.id.nav_home:
-                break;
-            case R.id.nav_admin:
-                Intent intent = new Intent(MainActivity.this, AdminActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.nav_listTim:
-                Intent intent1 = new Intent(MainActivity.this, ListTim.class);
-                startActivity(intent1);
-                break;
-            case R.id.nav_listUser:
-                Intent intent2 = new Intent(MainActivity.this, ListUser.class);
-                startActivity(intent2);
-                break;
-            case R.id.nav_surat:
-                Intent intent3 = new Intent(MainActivity.this, Surat.class);
-                startActivity(intent3);
-                break;
-            case R.id.nav_statistika:
-                Intent intent4 = new Intent(MainActivity.this, Statistika.class);
-                startActivity(intent4);
-                break;
-            case R.id.nav_statistikTim:
-                Intent intent5 = new Intent(MainActivity.this, StatistikTim.class);
-                startActivity(intent5);
-                break;
-//            case R.id.nav_logout:
+        int itemId = menuItem.getItemId();
+        if (itemId == R.id.nav_home) {
+        } else if (itemId == R.id.nav_admin) {
+            Intent intent = new Intent(MainActivity.this, AdminActivity.class);
+            startActivity(intent);
+        } else if (itemId == R.id.nav_listTim) {
+            Intent intent1 = new Intent(MainActivity.this, ListTim.class);
+            startActivity(intent1);
+        } else if (itemId == R.id.nav_listUser) {
+            Intent intent2 = new Intent(MainActivity.this, ListUser.class);
+            startActivity(intent2);
+        } else if (itemId == R.id.nav_surat) {
+            Intent intent3 = new Intent(MainActivity.this, Surat.class);
+            startActivity(intent3);
+        } else if (itemId == R.id.nav_statistika) {
+            Intent intent4 = new Intent(MainActivity.this, Statistika.class);
+            startActivity(intent4);
+        } else if (itemId == R.id.nav_statistikTim) {
+            Intent intent5 = new Intent(MainActivity.this, StatistikTim.class);
+            startActivity(intent5);
+            //            case R.id.nav_logout:
 //                Intent intent6 = new Intent(MainActivity.this, LoginActivity.class);
 //                startActivity(intent6);
 //                break;
-            case R.id.nav_logout:
-                break;
-
-
+        } else if (itemId == R.id.nav_logout) {
         }
 
         return true;
@@ -116,32 +104,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.cardAdmin:
-                Intent intent = new Intent(MainActivity.this, AdminActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.cardTim:
-                Intent intent1 = new Intent(MainActivity.this, ListTim.class);
-                startActivity(intent1);
-                break;
-            case R.id.cardUser:
-                Intent intent2 = new Intent(MainActivity.this, ListUser.class);
-                startActivity(intent2);
-                break;
-            case R.id.cardSurat:
-                Intent intent3 = new Intent(MainActivity.this, Surat.class);
-                startActivity(intent3);
-                break;
-            case R.id.cardStatistik:
-                Intent intent4 = new Intent(MainActivity.this, Statistika.class);
-                startActivity(intent4);
-            case R.id.cardStsTim:
-                Intent intent5 = new Intent(MainActivity.this, StatistikTim.class);
-                startActivity(intent5);
-                break;
-            case R.id.cardLG:
-                //new
+        int id = view.getId();
+        if (id == R.id.cardAdmin) {
+            Intent intent = new Intent(MainActivity.this, AdminActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.cardTim) {
+            Intent intent1 = new Intent(MainActivity.this, ListTim.class);
+            startActivity(intent1);
+        } else if (id == R.id.cardUser) {
+            Intent intent2 = new Intent(MainActivity.this, ListUser.class);
+            startActivity(intent2);
+        } else if (id == R.id.cardSurat) {
+            Intent intent3 = new Intent(MainActivity.this, Surat.class);
+            startActivity(intent3);
+        } else if (id == R.id.cardStatistik) {
+            Intent intent4 = new Intent(MainActivity.this, Statistika.class);
+            startActivity(intent4);
+
+            Intent intent5 = new Intent(MainActivity.this, StatistikTim.class);
+            startActivity(intent5);
+        } else if (id == R.id.cardStsTim) {
+            Intent intent5 = new Intent(MainActivity.this, StatistikTim.class);
+            startActivity(intent5);
+        } else if (id == R.id.cardLG) {//new
         }
     }
 }
