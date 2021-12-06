@@ -44,6 +44,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -58,18 +60,24 @@ public class TambahActivity extends AppCompatActivity implements View.OnClickLis
     private EditText etNama, etTanggal, etAlamat, etFasilitas, etStatus;
     private Button btnSimpan, btnLokasi;
     private ImageView imgUpload;
-    private String nama, tanggal, alamat, fasilitas, status;
+    private String nama, tanggal, alamat, fasilitas, status, date;
+    private Calendar calendar;
     private static final int IMAGE_UPLOAD_REQUEST = 1;
     private static final int PERMISSIONS_REQUEST = 2;
     private Bitmap selectedImage = null;
     private MultipartBody.Part imagePart = null;
     LocationManager locationManager;
+    SimpleDateFormat simpleDateFormat;
 
+    @SuppressLint("SimpleDateFormat")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tambah);
 
+        calendar=Calendar.getInstance();
+        simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        date=simpleDateFormat.format(calendar.getTime());
         Spinner spinnerFasilitas = findViewById(R.id.sp_fasilitas);
         Spinner spinnerStatus = findViewById(R.id.sp_status);
         etNama = findViewById(R.id.et_nama);
@@ -87,6 +95,8 @@ public class TambahActivity extends AppCompatActivity implements View.OnClickLis
                     Manifest.permission.ACCESS_FINE_LOCATION
             }, 100);
         }
+
+        etTanggal.setText(date);
 
         btnLokasi.setOnClickListener(view -> getLocation());
 
