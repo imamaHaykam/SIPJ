@@ -17,7 +17,9 @@ import android.widget.Toast;
 import com.example.aplikasisipj.AdminActivity;
 import com.example.aplikasisipj.ListTim;
 import com.example.aplikasisipj.ListUser;
+import com.example.aplikasisipj.LoginRegister.Login;
 import com.example.aplikasisipj.R;
+import com.example.aplikasisipj.SessionManager;
 import com.example.aplikasisipj.StatistikTim;
 import com.example.aplikasisipj.Statistika;
 import com.example.aplikasisipj.Surat;
@@ -25,6 +27,7 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
+    SessionManager sessionManager;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
@@ -33,6 +36,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sessionManager = new SessionManager(MainActivity.this);
+        if(!sessionManager.isLoggedIn()){
+            moveToLogin();
+        }
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -57,6 +65,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         cardsts.setOnClickListener(this);
         CardView cardststim = findViewById(R.id.cardStsTim);
         cardststim.setOnClickListener(this);
+        CardView cardLogout = findViewById(R.id.cardLogout);
+        cardLogout.setOnClickListener(this);
+    }
+
+    private void moveToLogin() {
+        Intent intent = new Intent(MainActivity.this, Login.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -92,11 +109,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (itemId == R.id.nav_statistikTim) {
             Intent intent5 = new Intent(MainActivity.this, StatistikTim.class);
             startActivity(intent5);
-            //            case R.id.nav_logout:
-//                Intent intent6 = new Intent(MainActivity.this, LoginActivity.class);
-//                startActivity(intent6);
-//                break;
         } else if (itemId == R.id.nav_logout) {
+            sessionManager.logoutSession();
+            moveToLogin();
         }
 
         return true;
@@ -120,13 +135,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.cardStatistik) {
             Intent intent4 = new Intent(MainActivity.this, Statistika.class);
             startActivity(intent4);
-
             Intent intent5 = new Intent(MainActivity.this, StatistikTim.class);
             startActivity(intent5);
         } else if (id == R.id.cardStsTim) {
             Intent intent5 = new Intent(MainActivity.this, StatistikTim.class);
             startActivity(intent5);
-        } else if (id == R.id.cardLG) {//new
+        } else if (id == R.id.cardLogout) {
+            sessionManager.logoutSession();
+            moveToLogin();
         }
     }
 }

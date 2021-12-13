@@ -1,6 +1,8 @@
 package com.example.aplikasisipj.API;
 
+import com.example.aplikasisipj.Model.Login.Login;
 import com.example.aplikasisipj.Model.ResponseModel;
+import com.example.aplikasisipj.Model.SignUp.Signup;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -49,5 +51,20 @@ public interface APIRequestData {
             @Part("Fasilitas") RequestBody Fasilitas,
             @Part("Status") RequestBody Status,
             @Part MultipartBody.Part Image
+    );
+
+    @FormUrlEncoded
+    @POST("login.php")
+    Call<Login> ardLogin(
+        @Field("username") String username,
+        @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST("signup.php")
+    Call<Signup> ardSignup(
+            @Field("nama") String nama,
+            @Field("username") String username,
+            @Field("password") String password
     );
 }
