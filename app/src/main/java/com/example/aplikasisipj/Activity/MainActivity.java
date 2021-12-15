@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aplikasisipj.AdminActivity;
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
+    TextView tvNamatim;
+    private String namaTim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
+        tvNamatim = findViewById(R.id.namaInvis);
+
+        namaTim = sessionManager.getUserDetail().get(SessionManager.NAMA);
+        tvNamatim.setText(namaTim);
 
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -93,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (itemId == R.id.nav_home) {
         } else if (itemId == R.id.nav_admin) {
             Intent intent = new Intent(MainActivity.this, AdminActivity.class);
+            intent.putExtra("namaTim", namaTim);
             startActivity(intent);
         } else if (itemId == R.id.nav_listTim) {
             Intent intent1 = new Intent(MainActivity.this, ListTim.class);
@@ -122,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = view.getId();
         if (id == R.id.cardAdmin) {
             Intent intent = new Intent(MainActivity.this, AdminActivity.class);
+            intent.putExtra("namaTim", namaTim);
             startActivity(intent);
         } else if (id == R.id.cardTim) {
             Intent intent1 = new Intent(MainActivity.this, ListTim.class);

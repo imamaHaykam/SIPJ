@@ -376,6 +376,15 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/namaInvis"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="312dp"
+            tools:layout_editor_absoluteY="20dp"
+            tools:ignore="MissingConstraints" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

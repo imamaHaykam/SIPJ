@@ -2,7 +2,6 @@ package com.example.aplikasisipj.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -16,7 +15,6 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -28,15 +26,11 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import com.example.aplikasisipj.API.APIRequestData;
 import com.example.aplikasisipj.API.RetroServer;
 import com.example.aplikasisipj.Model.ResponseModel;
 import com.example.aplikasisipj.R;
+import com.example.aplikasisipj.SessionManager;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -45,6 +39,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -56,16 +51,25 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.aplikasisipj.SessionManager.NAMA;
+
 public class TambahActivity extends AppCompatActivity implements View.OnClickListener, LocationListener {
     private EditText etNama, etTanggal, etAlamat, etFasilitas, etStatus;
     private Button btnSimpan, btnLokasi;
     private ImageView imgUpload;
-    private String nama, tanggal, alamat, fasilitas, status, date;
+    private String nama;
+    private String tanggal;
+    private String alamat;
+    private String fasilitas;
+    private String status;
+    private String date;
+    private String namaTim;
     private Calendar calendar;
     private static final int IMAGE_UPLOAD_REQUEST = 1;
     private static final int PERMISSIONS_REQUEST = 2;
     private Bitmap selectedImage = null;
     private MultipartBody.Part imagePart = null;
+    SessionManager sessionManager;
     LocationManager locationManager;
     SimpleDateFormat simpleDateFormat;
 
@@ -89,6 +93,10 @@ public class TambahActivity extends AppCompatActivity implements View.OnClickLis
         btnLokasi = findViewById(R.id.btn_lokasi);
         imgUpload = findViewById(R.id.img_upload);
 
+        namaTim = getIntent().getStringExtra("namaTim");
+
+
+
         if (ContextCompat.checkSelfPermission(TambahActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(TambahActivity.this, new String[]{
@@ -96,6 +104,7 @@ public class TambahActivity extends AppCompatActivity implements View.OnClickLis
             }, 100);
         }
 
+        etNama.setText(namaTim);
         etTanggal.setText(date);
 
         btnLokasi.setOnClickListener(view -> getLocation());

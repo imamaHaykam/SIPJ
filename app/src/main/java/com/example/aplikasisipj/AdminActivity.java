@@ -22,6 +22,7 @@ import com.example.aplikasisipj.API.APIRequestData;
 import com.example.aplikasisipj.API.RetroServer;
 import com.example.aplikasisipj.Activity.MainActivity;
 import com.example.aplikasisipj.Activity.TambahActivity;
+import com.example.aplikasisipj.Activity.TambahDetailActivity;
 import com.example.aplikasisipj.Adapter.AdapterData;
 import com.example.aplikasisipj.Model.DataModel;
 import com.example.aplikasisipj.Model.ResponseModel;
@@ -46,6 +47,7 @@ public class AdminActivity extends MainActivity {
     private ProgressBar pbData;
     private FloatingActionButton fabTambah;
 
+    private String namaTim;
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -75,6 +77,8 @@ public class AdminActivity extends MainActivity {
         pbData = findViewById(R.id.pb_data);
         fabTambah = findViewById(R.id.fab_tambah);
 
+        namaTim = getIntent().getStringExtra("namaTim");
+
         lmData = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvData.setLayoutManager(lmData);
 
@@ -86,7 +90,15 @@ public class AdminActivity extends MainActivity {
             srlData.setRefreshing(false);
         });
 
-        fabTambah.setOnClickListener(view -> startActivity(new Intent(AdminActivity.this, TambahActivity.class)));
+//        fabTambah.setOnClickListener(view -> startActivity(new Intent(AdminActivity.this, TambahActivity.class)));
+        fabTambah.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminActivity.this, TambahActivity.class);
+                intent.putExtra("namaTim", namaTim);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
